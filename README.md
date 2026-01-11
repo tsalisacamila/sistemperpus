@@ -99,6 +99,6 @@ sistemperpus/
 └── package.json           # Dependencies project
 ```
 
-## 📝 Lisensi
+## Lisensi
 
 Project ini dibuat untuk tujuan pembelajaran dan pengembangan sistem informasi perpustakaan.
