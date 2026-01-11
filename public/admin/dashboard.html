@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sistem Perpustakaan</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>👑 Admin Dashboard</h1>
+        <div class="auth-section">
+            <div class="user-info">
+                <span id="userRole" class="role-badge role-admin">Admin</span>
+                <span id="userName"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav" id="navigation">
+            <button class="nav-btn active" data-section="catalog">Katalog Buku</button>
+            <button class="nav-btn" data-section="loans">Peminjaman</button>
+            <button class="nav-btn" data-section="members">Anggota</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Katalog Buku Section -->
+            <section id="catalog" class="section active">
+                <div class="section-header">
+                    <h2>Katalog Buku</h2>
+                    <button id="newBookBtn" class="btn btn-primary">Tambah Buku</button>
+                </div>
+
+                <!-- Search Controls -->
+                <div class="search-controls">
+                    <input type="text" id="searchBooks" placeholder="Cari buku berdasarkan judul, penulis..."
+                        class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">Semua Kategori</option>
+                    </select>
+                    <button id="searchBooksBtn" class="btn btn-primary">Cari</button>
+                </div>
+
+                <div id="booksGrid" class="books-grid">
+                    <!-- Books will be loaded here -->
+                </div>
+                <div id="booksPagination" class="pagination">
+                    <!-- Pagination will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Peminjaman Section -->
+            <section id="loans" class="section">
+                <div class="section-header">
+                    <h2>Manajemen Peminjaman</h2>
+                    <button id="newLoanBtn" class="btn btn-primary">Pinjam Buku</button>
+                </div>
+
+                <!-- Loan Statistics -->
+                <div id="loanStats" class="stats-grid">
+                    <!-- Statistics will be loaded here -->
+                </div>
+
+                <!-- Loans Table -->
+                <div class="table-container">
+                    <table id="loansTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Anggota</th>
+                                <th>Buku</th>
+                                <th>Tgl Pinjam</th>
+                                <th>Tgl Kembali</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loans will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Anggota Section -->
+            <section id="members" class="section">
+                <div class="section-header">
+                    <h2>Manajemen Anggota</h2>
+                    <button id="newMemberBtn" class="btn btn-primary">Anggota Baru</button>
+                </div>
+
+                <!-- Members Table -->
+                <div class="table-container">
+                    <table id="membersTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Telepon</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Members will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- New Book Modal -->
+    <div id="newBookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tambah Buku Baru</h2>
+            <form id="newBookForm">
+                <div class="form-group">
+                    <label for="bookTitle">Judul Buku:</label>
+                    <input type="text" id="bookTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookAuthor">Penulis:</label>
+                    <input type="text" id="bookAuthor" name="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookISBN">ISBN:</label>
+                    <input type="text" id="bookISBN" name="isbn">
+                </div>
+                <div class="form-group">
+                    <label for="bookCategory">Kategori:</label>
+                    <select id="bookCategory" name="category" required>
+                        <option value="Programming">Programming</option>
+                        <option value="Database">Database</option>
+                        <option value="Management">Management</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookPublisher">Penerbit:</label>
+                    <input type="text" id="bookPublisher" name="publisher">
+                </div>
+                <div class="form-group">
+                    <label for="bookYear">Tahun Terbit:</label>
+                    <input type="number" id="bookYear" name="publication_year" min="1900" max="2025">
+                </div>
+                <div class="form-group">
+                    <label for="bookCopies">Jumlah Eksemplar:</label>
+                    <input type="number" id="bookCopies" name="total_copies" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Deskripsi:</label>
+                    <textarea id="bookDescription" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Tambah Buku</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Book Modal -->
+    <div id="editBookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Buku</h2>
+            <form id="editBookForm">
+                <input type="hidden" id="editBookId">
+                <div class="form-group">
+                    <label for="editBookTitle">Judul Buku:</label>
+                    <input type="text" id="editBookTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBookAuthor">Penulis:</label>
+                    <input type="text" id="editBookAuthor" name="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBookISBN">ISBN:</label>
+                    <input type="text" id="editBookISBN" name="isbn">
+                </div>
+                <div class="form-group">
+                    <label for="editBookCategory">Kategori:</label>
+                    <select id="editBookCategory" name="category">
+                        <option value="">Pilih Kategori</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Database">Database</option>
+                        <option value="Management">Management</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editBookPublisher">Penerbit:</label>
+                    <input type="text" id="editBookPublisher" name="publisher">
+                </div>
+                <div class="form-group">
+                    <label for="editBookYear">Tahun Terbit:</label>
+                    <input type="number" id="editBookYear" name="publication_year" min="1900" max="2025">
+                </div>
+                <div class="form-group">
+                    <label for="editBookCopies">Jumlah Eksemplar:</label>
+                    <input type="number" id="editBookCopies" name="total_copies" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBookDescription">Deskripsi:</label>
+                    <textarea id="editBookDescription" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update Buku</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Loan Modal -->
+    <div id="newLoanModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Peminjaman Baru</h2>
+            <form id="newLoanForm">
+                <div class="form-group">
+                    <label for="loanMember">Anggota:</label>
+                    <select id="loanMember" name="member_id" required>
+                        <option value="">Pilih Anggota...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="loanBook">Buku:</label>
+                    <select id="loanBook" name="book_id" required>
+                        <option value="">Pilih Buku...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="loanDate">Tanggal Pinjam:</label>
+                    <input type="date" id="loanDate" name="loan_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="loanDueDate">Tanggal Kembali (7 hari dari tanggal pinjam):</label>
+                    <input type="date" id="loanDueDate" name="due_date" required readonly>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Tambah Peminjaman</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Member Modal -->
+    <div id="newMemberModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Anggota Baru</h2>
+            <form id="newMemberForm">
+                <div class="form-group">
+                    <label for="memberName">Nama Lengkap:</label>
+                    <input type="text" id="memberName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Email:</label>
+                    <input type="email" id="memberEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberPhone">Telepon:</label>
+                    <input type="tel" id="memberPhone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="memberAddress">Alamat:</label>
+                    <textarea id="memberAddress" name="address" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Tambah Anggota</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Member Modal -->
+    <div id="editMemberModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Anggota</h2>
+            <form id="editMemberForm">
+                <input type="hidden" id="editMemberId">
+                <div class="form-group">
+                    <label for="editMemberName">Nama Lengkap:</label>
+                    <input type="text" id="editMemberName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMemberEmail">Email:</label>
+                    <input type="email" id="editMemberEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMemberPhone">Telepon:</label>
+                    <input type="tel" id="editMemberPhone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="editMemberAddress">Alamat:</label>
+                    <textarea id="editMemberAddress" name="address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editMemberStatus">Status:</label>
+                    <select id="editMemberStatus" name="status" required>
+                        <option value="active">Aktif</option>
+                        <option value="inactive">Tidak Aktif</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update Anggota</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="admin_dashboard.js"></script>
+</body>
+
+</html>

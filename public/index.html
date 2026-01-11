@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Perpustakaan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>📚 Sistem Perpustakaan</h1>
+            <div class="auth-section">
+                <button id="loginBtn" class="btn btn-primary">Login Petugas</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Selamat Datang di Perpustakaan Digital</h2>
+            <p>Jelajahi koleksi buku terlengkap dan temukan buku favorit Anda</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Katalog Buku Section (Public) -->
+            <section id="catalog" class="section active">
+                <div class="section-header">
+                    <h2>Katalog Buku</h2>
+                    <div class="search-controls">
+                        <input type="text" id="searchBooks" placeholder="Cari buku berdasarkan judul, penulis..."
+                            class="search-input">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">Semua Kategori</option>
+                        </select>
+                        <button id="searchBooksBtn" class="btn btn-primary">Cari</button>
+                    </div>
+                </div>
+                <div id="booksGrid" class="books-grid">
+                    <!-- Books will be loaded here -->
+                </div>
+                <div id="booksPagination" class="pagination">
+                    <!-- Pagination will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3>📖 Koleksi Lengkap</h3>
+                        <p>Ribuan buku dari berbagai kategori tersedia untuk Anda</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>🕒 Buka 24/7</h3>
+                        <p>Akses katalog online kapan saja, di mana saja</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>👥 Untuk Semua</h3>
+                        <p>Terbuka untuk mahasiswa, dosen, dan masyarakat umum</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-section">
+                <h4>Kontak</h4>
+                <p>📧 info@perpustakaan.ac.id</p>
+                <p>📞 (021) 1234-5678</p>
+            </div>
+            <div class="footer-section">
+                <h4>Jam Operasional</h4>
+                <p>Senin - Jumat: 08:00 - 20:00</p>
+                <p>Sabtu - Minggu: 09:00 - 17:00</p>
+            </div>
+            <div class="footer-section">
+                <h4>Alamat</h4>
+                <p>Jl. Pendidikan No. 123</p>
+                <p>Jakarta Selatan, 12345</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login Petugas</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="public-script.js"></script>
+</body>
+
+</html>
