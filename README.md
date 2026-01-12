@@ -38,7 +38,7 @@ Aplikasi manajemen perpustakaan berbasis web modern yang dibangun menggunakan No
 
 1.  **Clone Repository** (atau download zip project ini)
     ```bash
-    git clone https://github.com/gusbram66/sistemperpus.git
+    git clone [https://github.com/tsalisacamila/sistemperpus.git]
     cd sistemperpus
     ```
 
