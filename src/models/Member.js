@@ -60,8 +60,12 @@ const Member = sequelize.define('Member', {
         type: DataTypes.STRING(20),
         validate: {
             is: {
-                args: /^(\+62|62|0)8[1-9][0-9]{6,9}$/,
-                msg: 'Format nomor telepon tidak valid'
+                args: /^(\+62|62|0)[0-9]{8,12}$/,
+                msg: 'Format nomor telepon tidak valid (contoh: 081234567890 atau +6281234567890)'
+            },
+            len: {
+                args: [10, 15],
+                msg: 'Nomor telepon harus antara 10-15 karakter'
             }
         }
     },

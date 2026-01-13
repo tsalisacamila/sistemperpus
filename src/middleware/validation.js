@@ -54,9 +54,9 @@ const schemas = {
                 'string.empty': 'Nama penulis tidak boleh kosong',
                 'any.required': 'Nama penulis wajib diisi'
             }),
-        isbn: Joi.string().pattern(/^978-\d{3}-\d{3}-\d{3}-\d{1}$/).optional()
+        isbn: Joi.string().pattern(/^(97[89])[\d\-]{10,17}$/).allow('').optional()
             .messages({
-                'string.pattern.base': 'Format ISBN tidak valid (contoh: 978-123-456-789-0)'
+                'string.pattern.base': 'Format ISBN tidak valid (contoh: 9780596517748 atau 978-0-596-51774-8)'
             }),
         category: Joi.string().valid('Programming', 'Database', 'Management', 'Computer Science', 'Web Development', 'Mobile Development', 'Other').optional(),
         publisher: Joi.string().max(255).optional(),
@@ -68,7 +68,10 @@ const schemas = {
     updateBook: Joi.object({
         title: Joi.string().min(1).max(255).optional(),
         author: Joi.string().min(1).max(255).optional(),
-        isbn: Joi.string().pattern(/^978-\d{3}-\d{3}-\d{3}-\d{1}$/).optional(),
+        isbn: Joi.string().pattern(/^(97[89])[\d\-]{10,17}$/).allow('').optional()
+            .messages({
+                'string.pattern.base': 'Format ISBN tidak valid (contoh: 9780596517748 atau 978-0-596-51774-8)'
+            }),
         category: Joi.string().valid('Programming', 'Database', 'Management', 'Computer Science', 'Web Development', 'Mobile Development', 'Other').optional(),
         publisher: Joi.string().max(255).optional(),
         publication_year: Joi.number().integer().min(1900).max(new Date().getFullYear()).optional(),
@@ -88,9 +91,10 @@ const schemas = {
                 'string.email': 'Format email tidak valid',
                 'any.required': 'Email wajib diisi'
             }),
-        phone: Joi.string().pattern(/^(\+62|62|0)8[1-9][0-9]{6,9}$/).optional()
+        phone: Joi.string().pattern(/^(\+62|62|0)[0-9]{8,12}$/).max(15).optional()
             .messages({
-                'string.pattern.base': 'Format nomor telepon tidak valid'
+                'string.pattern.base': 'Format nomor telepon tidak valid (contoh: 081234567890 atau +6281234567890)',
+                'string.max': 'Nomor telepon maksimal 15 karakter'
             }),
         address: Joi.string().optional()
     }),
@@ -98,7 +102,7 @@ const schemas = {
     updateMember: Joi.object({
         name: Joi.string().min(2).max(255).optional(),
         email: Joi.string().email().optional(),
-        phone: Joi.string().pattern(/^(\+62|62|0)8[1-9][0-9]{6,9}$/).optional(),
+        phone: Joi.string().pattern(/^(\+62|62|0)[0-9]{8,12}$/).max(15).optional(),
         address: Joi.string().optional(),
         status: Joi.string().valid('active', 'inactive').optional()
     }),
